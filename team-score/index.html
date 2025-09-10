@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Scores Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Corner Images -->
+    <img src="kd1.png" alt="Top Left" class="corner-image top-left">
+    <img src="cd1.png" alt="Top Right" class="corner-image top-right">
+    <img src="kd2.png" alt="Bottom Left" class="corner-image bottom-left">
+    <img src="cd2.png" alt="Bottom Right" class="corner-image-ddbb bottom-right">
+
+    <div class="container">
+        <div class="teams-grid">
+            <div class="team-card" id="team1">
+                <h2 contenteditable="true" class="team-name" id="name1">Team 1</h2>
+                <div class="score-display">
+                    <span class="score" id="score1">0</span>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-decrease" onclick="changeScore(1, -1)">-</button>
+                    <button class="btn btn-increase" onclick="changeScore(1, 1)">+</button>
+                </div>
+            </div>
+
+            <div class="team-card" id="team2">
+                <h2 contenteditable="true" class="team-name" id="name2">Team 2</h2>
+                <div class="score-display">
+                    <span class="score" id="score2">0</span>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-decrease" onclick="changeScore(2, -1)">-</button>
+                    <button class="btn btn-increase" onclick="changeScore(2, 1)">+</button>
+                </div>
+            </div>
+
+            <div class="team-card" id="team3">
+                <h2 contenteditable="true" class="team-name" id="name3">Team 3</h2>
+                <div class="score-display">
+                    <span class="score" id="score3">0</span>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-decrease" onclick="changeScore(3, -1)">-</button>
+                    <button class="btn btn-increase" onclick="changeScore(3, 1)">+</button>
+                </div>
+            </div>
+
+            <div class="team-card" id="team4">
+                <h2 contenteditable="true" class="team-name" id="name4">Team 4</h2>
+                <div class="score-display">
+                    <span class="score" id="score4">0</span>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-decrease" onclick="changeScore(4, -1)">-</button>
+                    <button class="btn btn-increase" onclick="changeScore(4, 1)">+</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

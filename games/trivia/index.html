@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新郎新娘大问答</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>新郎新娘大问答</h1>
+            <div class="quiz-info">
+                <span class="question-counter"><span id="current-question">1</span> / <span
+                        id="total-questions">10</span></span>
+            </div>
+        </header>
+
+        <main class="quiz-container">
+            <div class="question-card">
+                <h2 class="question-text" id="question-text">正在加载题目...</h2>
+
+                <div class="answers-container" id="answers-container">
+                    <!-- Answers will be populated by JavaScript -->
+                </div>
+
+                <div class="quiz-controls">
+                    <button class="btn btn-reveal" id="reveal-btn" onclick="revealAnswer()">答案</button>
+                    <div class="navigation">
+                        <button class="btn btn-nav" id="prev-btn" onclick="previousQuestion()" disabled>上一题</button>
+                        <button class="btn btn-nav" id="next-btn" onclick="nextQuestion()">下一题</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

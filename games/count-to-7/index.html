@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Count to 7 Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Game Title -->
+        <div class="game-title">
+            <h1>数7</h1>
+        </div>
+
+        <!-- Players Grid -->
+        <div class="players-grid">
+            <div class="player-card active" id="player1">
+                <div class="dialog-bubble" id="dialog1"></div>
+                <div class="player-avatar">👦</div>
+            </div>
+
+            <div class="player-card" id="player2">
+                <div class="dialog-bubble" id="dialog2"></div>
+                <div class="player-avatar">👧</div>
+            </div>
+
+            <div class="player-card" id="player3">
+                <div class="dialog-bubble" id="dialog3"></div>
+                <div class="player-avatar">👧</div>
+            </div>
+
+            <div class="player-card" id="player4">
+                <div class="dialog-bubble" id="dialog4"></div>
+                <div class="player-avatar">👦</div>
+            </div>
+        </div>
+
+
+
+        <!-- Winner Display -->
+        <div class="winner-display" id="winnerDisplay" style="display: none;">
+            <div class="winner-crown">👑</div>
+            <div class="winner-text">Winner!</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
