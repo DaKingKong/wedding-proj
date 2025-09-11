@@ -1,34 +1,92 @@
-// Song lyrics data with tempo information
+// Song lyrics data with timestamp information and audio files
 const songs = [
     {
-        title: "栀子花开",
+        title: "后来",
         lyrics: "栀子花**白**花瓣，落在我**蓝**色百褶裙上。爱你，你轻声说。我低下头，闻见一阵芬芳。",
-        tempo: 30 // Moderate tempo, gentle ballad
+        timestamps: [
+            { phrase: "栀子花**白**花瓣，", time: 1.0 },
+            { phrase: "落在我**蓝**色百褶裙上。", time: 6.5 },
+            { phrase: "爱你，", time: 11.0 },
+            { phrase: "你轻声说。", time: 15.0 },
+            { phrase: "我低下头，", time: 19.0 },
+            { phrase: "闻见一阵芬芳。", time: 21.0 }
+        ],
+        audioFile: "后来.mp3"
     },
     {
         title: "你是我的眼",
         lyrics: "眼前的**黑**不是**黑**，你说的**白**是什么**白**。人们说的天空**蓝**，是我记忆中那团**白**云，背后的**蓝**天。",
-        tempo: 100 // Slow, emotional ballad
+        timestamps: [
+            { phrase: "眼前的**黑**不是**黑**，", time: 1.0 },
+            { phrase: "你说的**白**是什么**白**。", time: 5.0 },
+            { phrase: "人们说的天空**蓝**，", time: 8.0 },
+            { phrase: "是我记忆中那团**白**云，", time: 12.0 },
+            { phrase: "背后的**蓝**天。", time: 16.0 }
+        ],
+        audioFile: "你是我的眼.mp3"
     },
     {
-        title: "朋友",
-        lyrics: "朋友**一**生**一**起走，那些日子不再有，**一**句话**一**辈子，**一**生情**一**杯酒",
-        tempo: 110 // Moderate tempo, nostalgic
+        title: "八方来财",
+        lyrics: "我们这的憋佬仔，脖上喜欢挂玉牌。香炉供台上摆，长大才开白黄牌。虔诚拜**三**拜，钱包里多**几百**。易的是**六**合彩，难的是等河牌。来财，来。",
+        timestamps: [
+            { phrase: "我们这的憋佬仔，", time: 2.0 },
+            { phrase: "脖上喜欢挂玉牌。", time: 4.0 },
+            { phrase: "香炉供台上摆，", time: 6.0 },
+            { phrase: "长大才开白黄牌。", time: 8.0 },
+            { phrase: "虔诚拜**三**拜，", time: 10.0 },
+            { phrase: "钱包里多**几百**。", time: 12.0 },
+            { phrase: "易的是**六**合彩，", time: 14.0 },
+            { phrase: "难的是等河牌。", time: 16.0 },
+            { phrase: "来财，来。", time: 18.0 }
+        ],
+        audioFile: "八方来财.mp3"
     },
     {
         title: "双截棍",
         lyrics: "**一**个马步向前，**一**记左勾拳，右勾拳。**一**句惹毛我的人有危险。**一**再重演，**一**根我不抽的烟，**一**放好多年，它**一**直在身边。怎么该，怎么该，我打开任督**二**脉。怎么该，怎么该，东亚病夫的招牌。怎么该，怎么该，已被我**一**脚踢开。",
-        tempo: 140 // Fast tempo, rap style
+        timestamps: [
+            { phrase: "**一**个马步向前，", time: 1.0 },
+            { phrase: "**一**记左勾拳，右勾拳。", time: 2.0 },
+            { phrase: "**一**句惹毛我的人有危险。", time: 4.0 },
+            { phrase: "**一**再重演，", time: 6.0 },
+            { phrase: "**一**根我不抽的烟，", time: 7.0 },
+            { phrase: "**一**放好多年，", time: 8.0 },
+            { phrase: "它**一**直在身边。", time: 9.0 },
+            { phrase: "怎么该，怎么该，", time: 11.0 },
+            { phrase: "我打开任督**二**脉。", time: 12.0 },
+            { phrase: "怎么该，怎么该，", time: 13.0 },
+            { phrase: "东亚病夫的招牌。", time: 14.0 },
+            { phrase: "怎么该，怎么该，", time: 15.5 },
+            { phrase: "已被我**一**脚踢开。", time: 17.0 }
+        ],
+        audioFile: "双节棍.mp3"
     },
     {
         title: "火",
         lyrics: "**你**喷的火，是**我**的造型。**I** feeling good，无法喘气。**我**就是火，不论被谁浇息。呜，Baby。",
-        tempo: 130 // Upbeat tempo, energetic
+        timestamps: [
+            { phrase: "**你**喷的火，", time: 2.0 },
+            { phrase: "是**我**的造型。", time: 5.0 },
+            { phrase: "**I** feeling good，", time: 7.0 },
+            { phrase: "无法喘气。", time: 9.0 },
+            { phrase: "**我**就是火，", time: 11.0 },
+            { phrase: "不论被谁浇息。", time: 13.0 },
+            { phrase: "呜~Baby。", time: 16.0 }
+        ],
+        audioFile: "火.mp3"
     },
     {
-        title: "你爱我吗",
+        title: "爱我还是他",
         lyrics: "**你**爱**我**还是**他**。是不是真的**他**有比**我**好，**你**为谁在挣扎。**你**爱**我**还是**他**。就说出**你**想说的真心话，**你**到底要跟**我**还是**他**。",
-        tempo: 115 // Moderate tempo, questioning tone
+        timestamps: [
+            { phrase: "**你**爱**我**还是**他**。", time: 9.0 },
+            { phrase: "是不是真的**他**有比**我**好，", time: 16.0 },
+            { phrase: "**你**为谁在挣扎。", time: 21.0 },
+            { phrase: "**你**爱**我**还是**他**。", time: 24.0 },
+            { phrase: "就说出**你**想说的真心话，", time: 30.0 },
+            { phrase: "**你**到底要跟**我**还是**他**。", time: 35.0 }
+        ],
+        audioFile: "爱我还是他.mp3"
     }
 ];
 
@@ -36,10 +94,35 @@ let currentSongIndex = 0;
 let isPlaying = false;
 let wordIndex = 0;
 let allWords = [];
-let playInterval = null;
+let audioPlayer = null;
+let scheduledTimeouts = [];
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function () {
+    audioPlayer = document.getElementById('audio-player');
+
+    // Add event listeners for audio synchronization
+    if (audioPlayer) {
+        audioPlayer.addEventListener('play', function () {
+            if (!isPlaying) {
+                isPlaying = true;
+                const playBtn = document.getElementById('play-btn');
+                playBtn.textContent = '暂停';
+                playBtn.classList.add('playing');
+            }
+        });
+
+        audioPlayer.addEventListener('pause', function () {
+            if (isPlaying) {
+                pauseLyrics();
+            }
+        });
+
+        audioPlayer.addEventListener('ended', function () {
+            resetPlayState();
+        });
+    }
+
     updateSongCounter();
     displaySong();
 });
@@ -53,39 +136,35 @@ function displaySong() {
     // Update song title
     songTitle.textContent = song.title;
 
+    // Update audio source
+    if (audioPlayer) {
+        const audioSource = document.getElementById('audio-source');
+        audioSource.src = song.audioFile;
+        audioPlayer.load();
+    }
+
     // Clear previous lyrics
     lyricsContainer.innerHTML = '';
 
-    // Process and display lyrics
-    const lyrics = song.lyrics;
-    const lines = lyrics.split('。').filter(line => line.trim() !== '');
-
+    // Process and display lyrics using timestamps
     allWords = [];
 
-    lines.forEach(line => {
-        const lineElement = document.createElement('div');
-        lineElement.className = 'lyrics-line';
+    // Create phrase elements from timestamps
+    song.timestamps.forEach((timestampData, index) => {
+        const phraseElement = document.createElement('span');
+        phraseElement.className = 'word';
+        phraseElement.setAttribute('data-timestamp', timestampData.time);
 
-        // Split line into words and punctuation
-        const words = line.split(/([，。！？；：])/).filter(part => part.trim() !== '');
+        // Check if phrase should be highlighted (marked with **word**)
+        if (timestampData.phrase.includes('**')) {
+            const processedPhrase = timestampData.phrase.replace(/\*\*(.*?)\*\*/g, '<span class="highlighted-word">$1</span>');
+            phraseElement.innerHTML = processedPhrase;
+        } else {
+            phraseElement.textContent = timestampData.phrase;
+        }
 
-        words.forEach(word => {
-            const wordElement = document.createElement('span');
-            wordElement.className = 'word';
-
-            // Check if word should be highlighted (marked with **word**)
-            if (word.includes('**')) {
-                const processedWord = word.replace(/\*\*(.*?)\*\*/g, '<span class="highlighted-word">$1</span>');
-                wordElement.innerHTML = processedWord;
-            } else {
-                wordElement.textContent = word;
-            }
-
-            lineElement.appendChild(wordElement);
-            allWords.push(wordElement);
-        });
-
-        lyricsContainer.appendChild(lineElement);
+        lyricsContainer.appendChild(phraseElement);
+        allWords.push(phraseElement);
     });
 
     // Reset play state
@@ -98,18 +177,23 @@ function resetPlayState() {
     isPlaying = false;
     wordIndex = 0;
 
-    if (playInterval) {
-        clearInterval(playInterval);
-        playInterval = null;
+    // Clear all scheduled timeouts
+    scheduledTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    scheduledTimeouts = [];
+
+    // Pause audio if playing
+    if (audioPlayer && !audioPlayer.paused) {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
     }
 
-    // Hide all words
-    allWords.forEach(word => {
-        word.classList.remove('visible');
-        const highlightedWord = word.querySelector('.highlighted-word');
-        if (highlightedWord) {
+    // Hide all phrases
+    allWords.forEach(phrase => {
+        phrase.classList.remove('visible');
+        const highlightedWords = phrase.querySelectorAll('.highlighted-word');
+        highlightedWords.forEach(highlightedWord => {
             highlightedWord.classList.remove('pop-up', 'continuous-glow');
-        }
+        });
     });
 
     // Update play button
@@ -127,7 +211,7 @@ function togglePlay() {
     }
 }
 
-// Play lyrics word by word
+// Play lyrics word by word using timestamps
 function playLyrics() {
     if (wordIndex >= allWords.length) {
         resetPlayState();
@@ -139,49 +223,72 @@ function playLyrics() {
     playBtn.textContent = '暂停';
     playBtn.classList.add('playing');
 
-    // Get current song's timing
+    // Start audio playback
+    if (audioPlayer) {
+        audioPlayer.play().catch(error => {
+            console.log('Audio playback failed:', error);
+        });
+    }
+
+    // Get current song's timestamps
     const currentSong = songs[currentSongIndex];
-    const tempo = currentSong.tempo;
+    const timestamps = currentSong.timestamps;
 
-    // Convert tempo (BPM) to word delay (milliseconds)
-    // Formula: 60000ms / (tempo * words_per_beat)
-    // Assuming roughly 2 words per beat for Chinese lyrics
-    const wordsPerBeat = 2;
-    const wordDelay = Math.round(60000 / (tempo * wordsPerBeat));
+    // Clear any existing scheduled timeouts
+    scheduledTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    scheduledTimeouts = [];
 
-    playInterval = setInterval(() => {
-        if (wordIndex < allWords.length) {
-            const currentWord = allWords[wordIndex];
-            currentWord.classList.add('visible');
+    // Schedule each phrase to appear at its specific timestamp
+    timestamps.forEach((timestampData, index) => {
+        const delay = timestampData.time * 1000; // Convert seconds to milliseconds
 
-            // Check if this word contains a highlighted word
-            const highlightedWord = currentWord.querySelector('.highlighted-word');
-            if (highlightedWord) {
-                // Add pop-up animation
-                highlightedWord.classList.add('pop-up');
+        const timeoutId = setTimeout(() => {
+            if (isPlaying && index < allWords.length) {
+                const currentPhrase = allWords[index];
+                currentPhrase.classList.add('visible');
 
-                // After pop-up animation, add continuous glow
-                setTimeout(() => {
-                    highlightedWord.classList.remove('pop-up');
-                    highlightedWord.classList.add('continuous-glow');
-                }, 800);
+                // Check if this phrase contains highlighted words
+                const highlightedWords = currentPhrase.querySelectorAll('.highlighted-word');
+                highlightedWords.forEach(highlightedWord => {
+                    // Add pop-up animation
+                    highlightedWord.classList.add('pop-up');
+
+                    // After pop-up animation, add continuous glow
+                    setTimeout(() => {
+                        highlightedWord.classList.remove('pop-up');
+                        highlightedWord.classList.add('continuous-glow');
+                    }, 800);
+                });
             }
+        }, delay);
 
-            wordIndex++;
-        } else {
-            // Finished playing
+        scheduledTimeouts.push(timeoutId);
+    });
+
+    // Set a timeout to finish playing when the last word should appear
+    const lastTimestamp = timestamps[timestamps.length - 1];
+    const finishTime = (lastTimestamp.time + 2) * 1000; // Add 2 seconds buffer
+
+    const finishTimeoutId = setTimeout(() => {
+        if (isPlaying) {
             pauseLyrics();
         }
-    }, wordDelay); // Use tempo-based timing
+    }, finishTime);
+
+    scheduledTimeouts.push(finishTimeoutId);
 }
 
 // Pause lyrics
 function pauseLyrics() {
     isPlaying = false;
 
-    if (playInterval) {
-        clearInterval(playInterval);
-        playInterval = null;
+    // Clear all scheduled timeouts
+    scheduledTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    scheduledTimeouts = [];
+
+    // Pause audio
+    if (audioPlayer && !audioPlayer.paused) {
+        audioPlayer.pause();
     }
 
     const playBtn = document.getElementById('play-btn');
@@ -212,6 +319,7 @@ function updateNavigationButtons() {
 // Navigate to previous song
 function previousSong() {
     if (currentSongIndex > 0) {
+        resetPlayState(); // Stop current playback
         currentSongIndex--;
         updateSongCounter();
         displaySong();
@@ -221,6 +329,7 @@ function previousSong() {
 // Navigate to next song
 function nextSong() {
     if (currentSongIndex < songs.length - 1) {
+        resetPlayState(); // Stop current playback
         currentSongIndex++;
         updateSongCounter();
         displaySong();

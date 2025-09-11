@@ -30,6 +30,12 @@
                         <button class="btn btn-play" id="play-btn" onclick="togglePlay()">播放</button>
                         <button class="btn btn-reset" id="reset-btn" onclick="resetLyrics()">重置</button>
                     </div>
+                    <div class="audio-controls">
+                        <audio id="audio-player" controls style="width: 100%; margin: 10px 0;">
+                            <source id="audio-source" src="" type="audio/mpeg">
+                            您的浏览器不支持音频播放。
+                        </audio>
+                    </div>
                     <div class="navigation">
                         <button class="btn btn-nav" id="prev-btn" onclick="previousSong()" disabled>上一首</button>
                         <button class="btn btn-nav" id="next-btn" onclick="nextSong()">下一首</button>
