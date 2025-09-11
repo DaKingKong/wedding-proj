@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>倒计时</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Game Title -->
+        <div class="game-title">
+            <h1>倒计时</h1>
+        </div>
+
+        <!-- Countdown Display -->
+        <div class="countdown-display">
+            <div class="time-circle" id="timeCircle">
+                <div class="time-text" id="timeText">00:00</div>
+                <div class="time-label">剩余时间</div>
+            </div>
+        </div>
+
+        <!-- Control Button -->
+        <div class="control-section">
+            <button class="btn btn-control" id="controlBtn" onclick="toggleTimer()">开始</button>
+        </div>
+
+        <!-- Time Input Section -->
+        <div class="time-input-section">
+            <div class="input-group">
+                <label for="seconds">秒:</label>
+                <input type="number" id="seconds" min="0" max="59" value="5" onchange="updateTime()">
+            </div>
+            <div class="input-group">
+                <label for="milliseconds">毫秒:</label>
+                <input type="number" id="milliseconds" min="0" max="999" value="0" onchange="updateTime()">
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

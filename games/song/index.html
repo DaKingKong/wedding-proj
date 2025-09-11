@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歌词展示</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>歌词展示</h1>
+            <div class="song-info">
+                <span class="song-counter"><span id="current-song">1</span> / <span id="total-songs">6</span></span>
+            </div>
+        </header>
+
+        <main class="song-container">
+            <div class="song-card">
+                <h2 class="song-title" id="song-title">正在加载歌曲...</h2>
+
+                <div class="lyrics-container" id="lyrics-container">
+                    <!-- Lyrics will be populated by JavaScript -->
+                </div>
+
+                <div class="song-controls">
+                    <div class="play-controls">
+                        <button class="btn btn-play" id="play-btn" onclick="togglePlay()">播放</button>
+                        <button class="btn btn-reset" id="reset-btn" onclick="resetLyrics()">重置</button>
+                    </div>
+                    <div class="navigation">
+                        <button class="btn btn-nav" id="prev-btn" onclick="previousSong()" disabled>上一首</button>
+                        <button class="btn btn-nav" id="next-btn" onclick="nextSong()">下一首</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

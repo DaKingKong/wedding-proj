@@ -1,0 +1,380 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', 'SimHei', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #e8f5e8 0%, #ffffff 50%, #f0f8f0 100%);
+    color: #333;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Decorative curved background elements */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(76, 175, 80, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.3) 0%, transparent 40%);
+    z-index: -2;
+    animation: float 20s ease-in-out infinite;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        conic-gradient(from 0deg at 10% 10%, transparent 0deg, rgba(76, 175, 80, 0.05) 60deg, transparent 120deg),
+        conic-gradient(from 180deg at 90% 90%, transparent 0deg, rgba(76, 175, 80, 0.05) 60deg, transparent 120deg);
+    z-index: -1;
+    animation: rotate 30s linear infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    33% {
+        transform: translate(30px, -30px) rotate(120deg);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) rotate(240deg);
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Game Title */
+.game-title {
+    margin-bottom: 40px;
+}
+
+.game-title h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #2d5a2d;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+
+    0%,
+    100% {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    50% {
+        text-shadow: 2px 2px 8px rgba(76, 175, 80, 0.3);
+    }
+}
+
+/* Countdown Display */
+.countdown-display {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.time-circle {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 35px rgba(76, 175, 80, 0.4);
+    border: 6px solid #2d5a2d;
+    transition: all 0.5s ease;
+    animation: timePulse 2s infinite;
+    position: relative;
+}
+
+.time-circle.running {
+    animation: timeRunning 1s infinite;
+}
+
+.time-circle.warning {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    border-color: #e65100;
+    animation: timeWarning 0.5s infinite;
+}
+
+.time-circle.danger {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+    border-color: #b71c1c;
+    animation: timeDanger 0.3s infinite;
+}
+
+.time-text {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.time-label {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Control Section */
+.control-section {
+    margin: 40px 0;
+}
+
+.btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.btn-control {
+    background-color: #4caf50;
+    color: white;
+    font-size: 1.5rem;
+    padding: 20px 40px;
+    min-width: 150px;
+}
+
+.btn-control:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.btn-control:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Time Input Section */
+.time-input-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fff8 100%);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 2px solid #e8f5e8;
+    margin-top: 30px;
+}
+
+.input-group {
+    display: inline-block;
+    margin: 0 15px;
+    text-align: center;
+}
+
+.input-group label {
+    display: block;
+    color: #2d5a2d;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.input-group input {
+    width: 80px;
+    padding: 10px;
+    border: 2px solid #c8e6c8;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #2d5a2d;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+.input-group input:disabled {
+    background-color: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+}
+
+/* Animations */
+@keyframes timePulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 15px 35px rgba(76, 175, 80, 0.4);
+    }
+
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 18px 40px rgba(76, 175, 80, 0.5);
+    }
+}
+
+@keyframes timeRunning {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 15px 35px rgba(76, 175, 80, 0.4);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 20px 45px rgba(76, 175, 80, 0.6);
+    }
+}
+
+@keyframes timeWarning {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 15px 35px rgba(255, 152, 0, 0.4);
+    }
+
+    50% {
+        transform: scale(1.08);
+        box-shadow: 0 22px 50px rgba(255, 152, 0, 0.7);
+    }
+}
+
+@keyframes timeDanger {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 15px 35px rgba(244, 67, 54, 0.4);
+    }
+
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 25px 55px rgba(244, 67, 54, 0.8);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .game-title h1 {
+        font-size: 3rem;
+    }
+
+    .time-circle {
+        width: 250px;
+        height: 250px;
+    }
+
+    .time-text {
+        font-size: 3rem;
+    }
+
+    .time-label {
+        font-size: 1rem;
+    }
+
+    .btn-control {
+        font-size: 1.3rem;
+        padding: 15px 30px;
+        min-width: 120px;
+    }
+
+    .time-input-section {
+        padding: 20px;
+    }
+
+    .input-group {
+        margin: 0 10px;
+    }
+
+    .input-group input {
+        width: 70px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-title h1 {
+        font-size: 2.5rem;
+    }
+
+    .time-circle {
+        width: 200px;
+        height: 200px;
+    }
+
+    .time-text {
+        font-size: 2.5rem;
+    }
+
+    .time-label {
+        font-size: 0.9rem;
+    }
+
+    .btn-control {
+        font-size: 1.2rem;
+        padding: 12px 25px;
+        min-width: 100px;
+    }
+
+    .time-input-section {
+        padding: 15px;
+    }
+
+    .input-group {
+        margin: 0 5px;
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    .input-group input {
+        width: 60px;
+        font-size: 1rem;
+    }
+}
