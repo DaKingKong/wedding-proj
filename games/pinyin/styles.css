@@ -125,10 +125,10 @@ header h1 {
 
 .question-text {
     color: #2d5a2d;
-    font-size: 2rem;
-    margin-bottom: 30px;
-    line-height: 1.6;
-    min-height: 60px;
+    font-size: 6rem;
+    margin-bottom: 80px;
+    line-height: 1.4;
+    min-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -139,6 +139,14 @@ header h1 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    transition: all 0.3s ease;
+    letter-spacing: 0.1em;
+}
+
+.question-text.revealed {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    min-height: 60px;
 }
 
 .answers-container {
@@ -146,6 +154,11 @@ header h1 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
+    transition: all 0.3s ease;
+}
+
+.answers-container.hidden {
+    display: none;
 }
 
 .answer-option {
@@ -323,7 +336,15 @@ header h1 {
     }
 
     .question-text {
+        font-size: 4.5rem;
+        min-height: 150px;
+        margin-bottom: 60px;
+    }
+
+    .question-text.revealed {
         font-size: 1.5rem;
+        min-height: 60px;
+        margin-bottom: 30px;
     }
 
     .answers-container {
@@ -357,8 +378,15 @@ header h1 {
     }
 
     .question-text {
+        font-size: 3.5rem;
+        min-height: 120px;
+        margin-bottom: 50px;
+    }
+
+    .question-text.revealed {
         font-size: 1.3rem;
         min-height: 50px;
+        margin-bottom: 30px;
     }
 
     .answer-option {

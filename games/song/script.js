@@ -96,6 +96,10 @@ let wordIndex = 0;
 let allWords = [];
 let audioPlayer = null;
 let scheduledTimeouts = [];
+let bpm = 78; // Default BPM
+let bounceInterval = null;
+let swingInterval = null;
+let popInterval = null;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function () {
@@ -143,6 +147,9 @@ function displaySong() {
         audioPlayer.load();
     }
 
+    // Update corner images based on current song
+    updateCornerImages(song.title);
+
     // Clear previous lyrics
     lyricsContainer.innerHTML = '';
 
@@ -167,9 +174,187 @@ function displaySong() {
         allWords.push(phraseElement);
     });
 
+    // Debug: Log the number of words created
+    console.log(`Created ${allWords.length} lyric phrases for song: ${song.title}`);
+
     // Reset play state
     resetPlayState();
     updateNavigationButtons();
+}
+
+// Get BPM for specific song
+function getSongBPM(songTitle) {
+    switch (songTitle) {
+        case "你是我的眼":
+            return 70;
+        case "后来":
+            return 78;
+        case "八方来财":
+            return 85;
+        default:
+            return 90;
+    }
+}
+
+// Update corner images based on current song
+function updateCornerImages(songTitle) {
+    const cornerImages = document.querySelectorAll('.corner-image');
+
+    if (songTitle === "你是我的眼") {
+        // Use images from 你是我的眼 folder
+        cornerImages[0].src = "你是我的眼/kd1.png"; // top-left
+        cornerImages[1].src = "你是我的眼/cd1.png"; // top-right
+        cornerImages[2].src = "你是我的眼/kd2.png"; // bottom-left
+        cornerImages[3].src = "你是我的眼/cd2.png"; // bottom-right
+    } else if (songTitle === "后来") {
+        // Use images from 后来 folder
+        cornerImages[0].src = "后来/kd1.png"; // top-left
+        cornerImages[1].src = "后来/cd1.png"; // top-right
+        cornerImages[2].src = "后来/kd2.png"; // bottom-left
+        cornerImages[3].src = "后来/cd2.png"; // bottom-right
+    } else if (songTitle === "八方来财") {
+        // Use images from 八方来财 folder
+        cornerImages[0].src = "八方来财/kd1.png"; // top-left
+        cornerImages[1].src = "八方来财/cd1.png"; // top-right
+        cornerImages[2].src = "八方来财/kd2.png"; // bottom-left
+        cornerImages[3].src = "八方来财/cd2.png"; // bottom-right
+    } else {
+        // Hide images for other songs
+        cornerImages.forEach(img => {
+            img.style.display = 'none';
+        });
+        return;
+    }
+
+    // Show images for songs that should have them
+    cornerImages.forEach(img => {
+        img.style.display = 'block';
+    });
+}
+
+// Check if corner images should be shown for a specific song
+function shouldShowCornerImages(songTitle) {
+    // Show corner images for "后来", "你是我的眼", and "八方来财" songs
+    return songTitle === "后来" || songTitle === "你是我的眼" || songTitle === "八方来财";
+}
+
+// Start swinging animation for corner images (for 你是我的眼)
+function startSwinging() {
+    console.log("startSwinging called");
+    stopSwinging(); // Clear any existing interval
+
+    const currentSong = songs[currentSongIndex];
+    if (currentSong.title !== "你是我的眼") {
+        console.log("Not 你是我的眼, skipping swing animation");
+        return;
+    }
+
+    // Get song-specific BPM
+    const songBPM = getSongBPM(currentSong.title);
+    const beatInterval = (60 / songBPM) * 1000;
+
+    // Add continuous swing class to all corner images
+    const cornerImages = document.querySelectorAll('.corner-image');
+    cornerImages.forEach(img => {
+        img.classList.add('swing');
+    });
+}
+
+// Start popping animation for corner images (for 八方来财)
+function startPopping() {
+    console.log("startPopping called");
+    stopPopping(); // Clear any existing interval
+
+    const currentSong = songs[currentSongIndex];
+    if (currentSong.title !== "八方来财") {
+        console.log("Not 八方来财, skipping pop animation");
+        return;
+    }
+
+    // Start animation after 2 seconds delay (only for 八方来财)
+    setTimeout(() => {
+        // Get song-specific BPM
+        const songBPM = getSongBPM(currentSong.title);
+        const beatInterval = (60 / songBPM) * 1000;
+
+        popInterval = setInterval(() => {
+            const cornerImages = document.querySelectorAll('.corner-image');
+            cornerImages.forEach(img => {
+                img.classList.add('pop');
+                // Remove pop class after animation completes
+                setTimeout(() => {
+                    img.classList.remove('pop');
+                }, 600); // Match the CSS animation duration
+            });
+        }, beatInterval);
+    }, 1500);
+}
+
+// Start bouncing animation for corner images (for 后来)
+function startBouncing() {
+    stopBouncing(); // Clear any existing interval
+
+    const currentSong = songs[currentSongIndex];
+    if (currentSong.title !== "后来") {
+        return;
+    }
+
+    // Get song-specific BPM
+    const songBPM = getSongBPM(currentSong.title);
+    const beatInterval = (60 / songBPM) * 1000;
+
+    bounceInterval = setInterval(() => {
+        const cornerImages = document.querySelectorAll('.corner-image');
+        cornerImages.forEach(img => {
+            img.classList.add('bounce');
+            // Remove bounce class after animation completes
+            setTimeout(() => {
+                img.classList.remove('bounce');
+            }, 600); // Match the CSS animation duration
+        });
+    }, beatInterval);
+}
+
+// Stop swinging animation
+function stopSwinging() {
+    if (swingInterval) {
+        clearInterval(swingInterval);
+        swingInterval = null;
+    }
+
+    // Remove swing class from all corner images
+    const cornerImages = document.querySelectorAll('.corner-image');
+    cornerImages.forEach(img => {
+        img.classList.remove('swing');
+    });
+}
+
+// Stop popping animation
+function stopPopping() {
+    if (popInterval) {
+        clearInterval(popInterval);
+        popInterval = null;
+    }
+
+    // Remove pop class from all corner images
+    const cornerImages = document.querySelectorAll('.corner-image');
+    cornerImages.forEach(img => {
+        img.classList.remove('pop');
+    });
+}
+
+// Stop bouncing animation
+function stopBouncing() {
+    if (bounceInterval) {
+        clearInterval(bounceInterval);
+        bounceInterval = null;
+    }
+
+    // Remove bounce class from all corner images
+    const cornerImages = document.querySelectorAll('.corner-image');
+    cornerImages.forEach(img => {
+        img.classList.remove('bounce');
+    });
 }
 
 // Reset play state
@@ -180,6 +365,11 @@ function resetPlayState() {
     // Clear all scheduled timeouts
     scheduledTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
     scheduledTimeouts = [];
+
+    // Stop all animations
+    stopBouncing();
+    stopSwinging();
+    stopPopping();
 
     // Pause audio if playing
     if (audioPlayer && !audioPlayer.paused) {
@@ -234,6 +424,21 @@ function playLyrics() {
     const currentSong = songs[currentSongIndex];
     const timestamps = currentSong.timestamps;
 
+    // Debug: Log current song and word count
+    console.log(`Playing song: ${currentSong.title}, ${allWords.length} words available`);
+
+    // Start appropriate animation for corner images based on song
+    if (currentSong.title === "你是我的眼") {
+        console.log("Starting swing animation");
+        startSwinging();
+    } else if (currentSong.title === "后来") {
+        console.log("Starting bounce animation");
+        startBouncing();
+    } else if (currentSong.title === "八方来财") {
+        console.log("Starting pop animation");
+        startPopping();
+    }
+
     // Clear any existing scheduled timeouts
     scheduledTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
     scheduledTimeouts = [];
@@ -265,17 +470,8 @@ function playLyrics() {
         scheduledTimeouts.push(timeoutId);
     });
 
-    // Set a timeout to finish playing when the last word should appear
-    const lastTimestamp = timestamps[timestamps.length - 1];
-    const finishTime = (lastTimestamp.time + 2) * 1000; // Add 2 seconds buffer
-
-    const finishTimeoutId = setTimeout(() => {
-        if (isPlaying) {
-            pauseLyrics();
-        }
-    }, finishTime);
-
-    scheduledTimeouts.push(finishTimeoutId);
+    // Remove the calculated timeout - let the audio 'ended' event handle stopping
+    // The audio 'ended' event listener will automatically call resetPlayState()
 }
 
 // Pause lyrics
@@ -285,6 +481,11 @@ function pauseLyrics() {
     // Clear all scheduled timeouts
     scheduledTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
     scheduledTimeouts = [];
+
+    // Stop all animations
+    stopBouncing();
+    stopSwinging();
+    stopPopping();
 
     // Pause audio
     if (audioPlayer && !audioPlayer.paused) {

@@ -40,6 +40,12 @@ function displayQuestion() {
 
     questionElement.textContent = question.question;
 
+    // Remove revealed class to show big centered pinyin
+    questionElement.classList.remove('revealed');
+
+    // Hide the entire answers container
+    answersContainer.classList.add('hidden');
+
     // Clear previous answers
     answersContainer.innerHTML = '';
 
@@ -63,6 +69,14 @@ function revealAnswer() {
     if (isAnswerRevealed) return;
 
     const answerElements = document.querySelectorAll('.answer-option');
+    const questionElement = document.getElementById('question-text');
+    const answersContainer = document.getElementById('answers-container');
+
+    // Add revealed class to question text to make it smaller
+    questionElement.classList.add('revealed');
+
+    // Show the answers container
+    answersContainer.classList.remove('hidden');
 
     // Show all answers with animation delay
     answerElements.forEach((el, index) => {

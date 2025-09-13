@@ -81,21 +81,7 @@ body::after {
     transition: opacity 0.3s ease;
 }
 
-.corner-image-ddbb {
-    position: fixed;
-    z-index: 10;
-    max-width: 110px;
-    max-height: 110px;
-    object-fit: contain;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-}
-
 .corner-image:hover {
-    opacity: 1;
-}
-
-.corner-image-ddbb:hover {
     opacity: 1;
 }
 
@@ -127,9 +113,10 @@ body::after {
 
 .teams-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
-    margin-top: 40px;
+    margin-top: 120px;
+    padding-top: 60px;
 }
 
 .team-card {
@@ -220,6 +207,13 @@ body::after {
 
 
 /* Responsive design */
+@media (max-width: 1200px) {
+    .teams-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
 @media (max-width: 768px) {
     .teams-grid {
         grid-template-columns: 1fr;

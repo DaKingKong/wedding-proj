@@ -1,4 +1,5 @@
 // Game state
+// Game state
 let gameState = {
     currentStep: 0,
     isAnimating: false,
@@ -93,7 +94,7 @@ function showNextStep() {
     setTimeout(() => {
         gameState.currentStep = (gameState.currentStep + 1) % gameState.animationSteps.length;
         showNextStep();
-    }, 1200);
+    }, 500);
 }
 
 // Update player states
