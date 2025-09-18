@@ -100,6 +100,70 @@ let bpm = 78; // Default BPM
 let bounceInterval = null;
 let swingInterval = null;
 let popInterval = null;
+let animationSwitchTimeout = null;
+let fireGridInterval = null;
+
+// Fire grid helpers (for 火)
+function createFireGrid() {
+    const gridItems = [];
+    const cols = 8; // Number of columns
+    const rows = 6; // Number of rows
+
+    for (let i = 0; i < cols * rows; i++) {
+        const img = document.createElement('img');
+        img.src = '火/fire.png';
+        img.className = 'fire-grid-item';
+
+        const col = i % cols;
+        const row = Math.floor(i / cols);
+
+        // Position items across the screen with some margin
+        const marginX = 60;
+        const marginY = 80;
+        const spacingX = (window.innerWidth - 2 * marginX) / (cols - 1);
+        const spacingY = (window.innerHeight - 2 * marginY) / (rows - 1);
+
+        img.style.left = marginX + col * spacingX + 'px';
+        img.style.top = marginY + row * spacingY + 'px';
+
+        document.body.appendChild(img);
+        gridItems.push(img);
+    }
+
+    return gridItems;
+}
+
+function startFireGrid() {
+    const currentSong = songs[currentSongIndex];
+    if (!currentSong || currentSong.title !== "火") return;
+
+    stopFireGrid();
+
+    const fireItems = createFireGrid();
+    const songBPM = getSongBPM(currentSong.title);
+    const beatInterval = (60 / songBPM) * 1000;
+
+    fireGridInterval = setInterval(() => {
+        fireItems.forEach(item => {
+            if (item && item.parentNode) {
+                item.classList.add('fire-pop');
+                setTimeout(() => {
+                    item.classList.remove('fire-pop');
+                }, 600);
+            }
+        });
+    }, beatInterval);
+}
+
+function stopFireGrid() {
+    if (fireGridInterval) {
+        clearInterval(fireGridInterval);
+        fireGridInterval = null;
+    }
+
+    const fireItems = document.querySelectorAll('.fire-grid-item');
+    fireItems.forEach(item => item.remove());
+}
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function () {
@@ -191,6 +255,10 @@ function getSongBPM(songTitle) {
             return 78;
         case "八方来财":
             return 85;
+        case "双截棍":
+            return 90;
+        case "火":
+            return 95;
         default:
             return 90;
     }
@@ -218,6 +286,24 @@ function updateCornerImages(songTitle) {
         cornerImages[1].src = "八方来财/cd1.png"; // top-right
         cornerImages[2].src = "八方来财/kd2.png"; // bottom-left
         cornerImages[3].src = "八方来财/cd2.png"; // bottom-right
+    } else if (songTitle === "双截棍") {
+        // Use images from 双节棍 folder
+        cornerImages[0].src = "双节棍/kd1.png"; // top-left
+        cornerImages[1].src = "双节棍/cd1.png"; // top-right
+        cornerImages[2].src = "双节棍/kd2.png"; // bottom-left
+        cornerImages[3].src = "双节棍/cd2.png"; // bottom-right
+    } else if (songTitle === "火") {
+        // Use images from 火 folder
+        cornerImages[0].src = "火/kd1.png"; // top-left
+        cornerImages[1].src = "火/cd1.png"; // top-right
+        cornerImages[2].src = "火/kd2.png"; // bottom-left
+        cornerImages[3].src = "火/cd2.png"; // bottom-right
+    } else if (songTitle === "爱我还是他") {
+        // Use the same DT image for all four corners
+        cornerImages[0].src = "爱我还是他/DT.PNG"; // top-left
+        cornerImages[1].src = "爱我还是他/DT.PNG"; // top-right
+        cornerImages[2].src = "爱我还是他/DT.PNG"; // bottom-left
+        cornerImages[3].src = "爱我还是他/DT.PNG"; // bottom-right
     } else {
         // Hide images for other songs
         cornerImages.forEach(img => {
@@ -230,12 +316,21 @@ function updateCornerImages(songTitle) {
     cornerImages.forEach(img => {
         img.style.display = 'block';
     });
+
+    // Toggle slow spin only for 爱我还是他
+    cornerImages.forEach(img => {
+        if (songTitle === "爱我还是他") {
+            img.classList.add('spin-slow');
+        } else {
+            img.classList.remove('spin-slow');
+        }
+    });
 }
 
 // Check if corner images should be shown for a specific song
 function shouldShowCornerImages(songTitle) {
-    // Show corner images for "后来", "你是我的眼", and "八方来财" songs
-    return songTitle === "后来" || songTitle === "你是我的眼" || songTitle === "八方来财";
+    // Show corner images for specific songs
+    return songTitle === "后来" || songTitle === "你是我的眼" || songTitle === "八方来财" || songTitle === "双截棍" || songTitle === "爱我还是他" || songTitle === "火";
 }
 
 // Start swinging animation for corner images (for 你是我的眼)
@@ -266,12 +361,13 @@ function startPopping() {
     stopPopping(); // Clear any existing interval
 
     const currentSong = songs[currentSongIndex];
-    if (currentSong.title !== "八方来财") {
-        console.log("Not 八方来财, skipping pop animation");
+    if (currentSong.title !== "八方来财" && currentSong.title !== "双截棍") {
+        console.log("Not 八方来财 or 双截棍, skipping pop animation");
         return;
     }
 
-    // Start animation after 2 seconds delay (only for 八方来财)
+    // Start animation: add initial delay only for 八方来财
+    const initialDelayMs = currentSong.title === "八方来财" ? 1500 : 0;
     setTimeout(() => {
         // Get song-specific BPM
         const songBPM = getSongBPM(currentSong.title);
@@ -280,14 +376,33 @@ function startPopping() {
         popInterval = setInterval(() => {
             const cornerImages = document.querySelectorAll('.corner-image');
             cornerImages.forEach(img => {
-                img.classList.add('pop');
+                if (currentSong.title === "双截棍") {
+                    img.classList.add('pop-alt');
+                } else {
+                    img.classList.add('pop');
+                }
                 // Remove pop class after animation completes
                 setTimeout(() => {
-                    img.classList.remove('pop');
+                    img.classList.remove('pop', 'pop-alt');
                 }, 600); // Match the CSS animation duration
             });
         }, beatInterval);
-    }, 1500);
+
+        // Timed switch: for 双截棍, switch to continuous shake after threshold
+        if (currentSong.title === "双截棍") {
+            const switchMs = getAnimationSwitchMs(currentSong.title);
+            if (switchMs > 0) {
+                if (animationSwitchTimeout) clearTimeout(animationSwitchTimeout);
+                animationSwitchTimeout = setTimeout(() => {
+                    // stop beat-driven pop
+                    stopPopping();
+                    // apply screen-wide rolling animation
+                    const imgs = document.querySelectorAll('.corner-image');
+                    imgs.forEach(img => img.classList.add('roll-screen'));
+                }, switchMs);
+            }
+        }
+    }, initialDelayMs);
 }
 
 // Start bouncing animation for corner images (for 后来)
@@ -335,12 +450,26 @@ function stopPopping() {
         clearInterval(popInterval);
         popInterval = null;
     }
+    if (animationSwitchTimeout) {
+        clearTimeout(animationSwitchTimeout);
+        animationSwitchTimeout = null;
+    }
 
-    // Remove pop class from all corner images
+    // Remove pop/alt/rolling classes from all corner images
     const cornerImages = document.querySelectorAll('.corner-image');
     cornerImages.forEach(img => {
-        img.classList.remove('pop');
+        img.classList.remove('pop', 'pop-alt', 'shake-strong', 'roll-around', 'roll-screen');
     });
+}
+
+// Configure when to switch animations (ms)
+function getAnimationSwitchMs(songTitle) {
+    switch (songTitle) {
+        case "双截棍":
+            return 11000; // 11 seconds
+        default:
+            return 0;
+    }
 }
 
 // Stop bouncing animation
@@ -370,6 +499,7 @@ function resetPlayState() {
     stopBouncing();
     stopSwinging();
     stopPopping();
+    stopFireGrid();
 
     // Pause audio if playing
     if (audioPlayer && !audioPlayer.paused) {
@@ -434,9 +564,12 @@ function playLyrics() {
     } else if (currentSong.title === "后来") {
         console.log("Starting bounce animation");
         startBouncing();
-    } else if (currentSong.title === "八方来财") {
+    } else if (currentSong.title === "八方来财" || currentSong.title === "双截棍") {
         console.log("Starting pop animation");
         startPopping();
+    } else if (currentSong.title === "火") {
+        console.log("Starting fire grid");
+        startFireGrid();
     }
 
     // Clear any existing scheduled timeouts
@@ -486,6 +619,7 @@ function pauseLyrics() {
     stopBouncing();
     stopSwinging();
     stopPopping();
+    stopFireGrid();
 
     // Pause audio
     if (audioPlayer && !audioPlayer.paused) {

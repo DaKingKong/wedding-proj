@@ -44,6 +44,41 @@ body::after {
     animation: rotate 30s linear infinite;
 }
 
+/* Stationary fire grid for 火 */
+.fire-grid-item {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.8;
+    transition: all 0.1s ease;
+}
+
+.fire-grid-item.fire-pop {
+    animation: firePopBPM 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes firePopBPM {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+        filter: brightness(1);
+    }
+
+    50% {
+        transform: scale(1.4);
+        opacity: 1;
+        filter: brightness(1.3) drop-shadow(0 0 8px rgba(255, 87, 34, 0.6));
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+        filter: brightness(1);
+    }
+}
+
 @keyframes float {
 
     0%,
@@ -98,6 +133,72 @@ body::after {
     animation: popToBPM 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
+/* Alternate pop animation for 双截棍 */
+.corner-image.pop-alt {
+    animation: popToBPMAlt 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Opt-in slow spin, and compose with other animations */
+.corner-image.spin-slow {
+    animation: rotateSlow 15s linear infinite;
+}
+
+.corner-image.spin-slow.bounce {
+    animation: rotateSlow 15s linear infinite, bounceToBPM 0.6s ease-in-out infinite;
+}
+
+.corner-image.spin-slow.swing {
+    animation: rotateSlow 15s linear infinite, swingToBPM 1.71s ease-in-out infinite;
+}
+
+.corner-image.spin-slow.pop {
+    animation: rotateSlow 15s linear infinite, popToBPM 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.corner-image.spin-slow.pop-alt {
+    animation: rotateSlow 15s linear infinite, popToBPMAlt 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Continuous shaky animation used after timed switch */
+.corner-image.shake-strong {
+    animation: shakeStrong 0.35s linear infinite;
+}
+
+.corner-image.spin-slow.shake-strong {
+    animation: rotateSlow 15s linear infinite, shakeStrong 0.35s linear infinite;
+}
+
+/* Rolling across screen after timed switch */
+.corner-image.roll-screen {
+    will-change: transform;
+}
+
+/* Assign per-corner clockwise tracks to avoid overlap */
+.corner-image.roll-screen.top-left {
+    animation: rollCW_tl 16s linear infinite;
+}
+
+.corner-image.roll-screen.top-right {
+    animation: rollCW_tr 16s linear infinite;
+}
+
+.corner-image.roll-screen.bottom-right {
+    animation: rollCW_br 16s linear infinite;
+}
+
+.corner-image.roll-screen.bottom-left {
+    animation: rollCW_bl 16s linear infinite;
+}
+
+/* Rolling around animation used after timed switch */
+.corner-image.roll-around {
+    animation: rollAround 1.2s linear infinite;
+}
+
+.corner-image.spin-slow.roll-around {
+    animation: rotateSlow 15s linear infinite, rollAround 1.2s linear infinite;
+}
+
 @keyframes popToBPM {
     0% {
         transform: scale(1);
@@ -112,6 +213,201 @@ body::after {
     100% {
         transform: scale(1);
         opacity: 1;
+    }
+}
+
+@keyframes popToBPMAlt {
+    0% {
+        transform: translateY(0) scale(0.95) rotate(0deg);
+        filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+        opacity: 0.95;
+    }
+
+    35% {
+        transform: translateY(-6px) scale(1.18) rotate(-6deg);
+        filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.18));
+        opacity: 1;
+    }
+
+    65% {
+        transform: translateY(2px) scale(1.04) rotate(3deg);
+        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.1));
+        opacity: 1;
+    }
+}
+
+/* Keyframes for strong shake */
+@keyframes shakeStrong {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-2px, 1px) rotate(-1deg);
+    }
+
+    20% {
+        transform: translate(2px, -2px) rotate(1.5deg);
+    }
+
+    30% {
+        transform: translate(-3px, 2px) rotate(-1.5deg);
+    }
+
+    40% {
+        transform: translate(3px, -1px) rotate(1deg);
+    }
+
+    50% {
+        transform: translate(-2px, 3px) rotate(-2deg);
+    }
+
+    60% {
+        transform: translate(2px, -3px) rotate(2deg);
+    }
+
+    70% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+
+    80% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+
+    90% {
+        transform: translate(-1px, 1px) rotate(-0.5deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+/* Clockwise perimeter tracks per-corner (assumes 20px margin, 120px image) */
+@keyframes rollCW_tl {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(calc(100vw - 120px - 40px), 0) rotate(360deg);
+    }
+
+    50% {
+        transform: translate(calc(100vw - 120px - 40px), calc(100vh - 120px - 40px)) rotate(720deg);
+    }
+
+    75% {
+        transform: translate(0, calc(100vh - 120px - 40px)) rotate(1080deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(1440deg);
+    }
+}
+
+@keyframes rollCW_tr {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(0, calc(100vh - 120px - 40px)) rotate(360deg);
+    }
+
+    50% {
+        transform: translate(calc(-1 * (100vw - 120px - 40px)), calc(100vh - 120px - 40px)) rotate(720deg);
+    }
+
+    75% {
+        transform: translate(calc(-1 * (100vw - 120px - 40px)), 0) rotate(1080deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(1440deg);
+    }
+}
+
+@keyframes rollCW_br {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(calc(-1 * (100vw - 120px - 40px)), 0) rotate(360deg);
+    }
+
+    50% {
+        transform: translate(calc(-1 * (100vw - 120px - 40px)), calc(-1 * (100vh - 120px - 40px))) rotate(720deg);
+    }
+
+    75% {
+        transform: translate(0, calc(-1 * (100vh - 120px - 40px))) rotate(1080deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(1440deg);
+    }
+}
+
+@keyframes rollCW_bl {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(0, calc(-1 * (100vh - 120px - 40px))) rotate(360deg);
+    }
+
+    50% {
+        transform: translate(calc(100vw - 120px - 40px), calc(-1 * (100vh - 120px - 40px))) rotate(720deg);
+    }
+
+    75% {
+        transform: translate(calc(100vw - 120px - 40px), 0) rotate(1080deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(1440deg);
+    }
+}
+
+/* Keyframes for rolling around (orbital-like motion with spin) */
+@keyframes rollAround {
+    0% {
+        transform: translate(0px, 0px) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(10px, -12px) rotate(90deg);
+    }
+
+    50% {
+        transform: translate(0px, -18px) rotate(180deg);
+    }
+
+    75% {
+        transform: translate(-12px, -8px) rotate(270deg);
+    }
+
+    100% {
+        transform: translate(0px, 0px) rotate(360deg);
+    }
+}
+
+@keyframes rotateSlow {
+    0% {
+        rotate: 0deg;
+    }
+
+    100% {
+        rotate: 360deg;
     }
 }
 
@@ -510,5 +806,4 @@ header h1 {
         padding: 8px 12px;
         font-size: 0.9rem;
     }
-}
 }
